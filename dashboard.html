@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manager Dashboard - CaféBliss Admin">
+    <title>Dashboard - CaféBliss Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">☕</span>
+                <span class="logo-text">CaféBliss</span>
+            </a>
+            <span class="admin-badge">Admin</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" data-tab="overview">
+                <span class="link-icon">📊</span>
+                <span>Overview</span>
+            </a>
+            <a href="#" class="sidebar-link" data-tab="orders">
+                <span class="link-icon">📦</span>
+                <span>Orders</span>
+            </a>
+            <a href="#" class="sidebar-link" data-tab="users">
+                <span class="link-icon">👥</span>
+                <span>Users</span>
+            </a>
+            <a href="#" class="sidebar-link" data-tab="reviews">
+                <span class="link-icon">⭐</span>
+                <span>Reviews</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn btn-outline btn-full" onclick="logoutManager()">
+                <span>🚪</span> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <h1 id="pageTitle">Overview</h1>
+            </div>
+            <div class="header-right">
+                <span class="manager-name" id="managerName">Manager</span>
+                <div class="manager-avatar">👔</div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="dashboard-content">
+            <!-- Overview Tab -->
+            <section class="tab-content active" id="overview-tab">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon orders-icon">📦</div>
+                        <div class="stat-info">
+                            <h3 id="totalOrders">0</h3>
+                            <p>Total Orders</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon revenue-icon">💰</div>
+                        <div class="stat-info">
+                            <h3 id="totalRevenue">₹0</h3>
+                            <p>Total Revenue</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon users-icon">👥</div>
+                        <div class="stat-info">
+                            <h3 id="totalUsers">0</h3>
+                            <p>Registered Users</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon reviews-icon">⭐</div>
+                        <div class="stat-info">
+                            <h3 id="avgRating">0</h3>
+                            <p>Average Rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>Recent Orders</h3>
+                            <a href="#" class="view-all" data-tab="orders">View All →</a>
+                        </div>
+                        <div class="recent-orders" id="recentOrders">
+                            <!-- Orders will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3>Latest Reviews</h3>
+                            <a href="#" class="view-all" data-tab="reviews">View All →</a>
+                        </div>
+                        <div class="recent-reviews" id="recentReviews">
+                            <!-- Reviews will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orders Tab -->
+            <section class="tab-content" id="orders-tab">
+                <div class="tab-header">
+                    <h2>All Orders</h2>
+                    <div class="filter-group">
+                        <select id="orderFilter" onchange="filterOrders()">
+                            <option value="all">All Orders</option>
+                            <option value="Success">Completed</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Orders will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="empty-state" id="noOrders" style="display: none;">
+                    <span class="empty-icon">📦</span>
+                    <h3>No Orders Yet</h3>
+                    <p>Orders will appear here when customers make purchases</p>
+                </div>
+            </section>
+
+            <!-- Users Tab -->
+            <section class="tab-content" id="users-tab">
+                <div class="tab-header">
+                    <h2>Registered Users</h2>
+                    <div class="search-box">
+                        <input type="text" id="userSearch" placeholder="Search users..." oninput="searchUsers()">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Orders</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="empty-state" id="noUsers" style="display: none;">
+                    <span class="empty-icon">👥</span>
+                    <h3>No Users Yet</h3>
+                    <p>Users will appear here when they register</p>
+                </div>
+            </section>
+
+            <!-- Reviews Tab -->
+            <section class="tab-content" id="reviews-tab">
+                <div class="tab-header">
+                    <h2>Customer Reviews</h2>
+                    <div class="filter-group">
+                        <select id="reviewFilter" onchange="filterReviews()">
+                            <option value="all">All Ratings</option>
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="2">2 Stars</option>
+                            <option value="1">1 Star</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="reviews-list" id="allReviews">
+                    <!-- Reviews will be loaded here -->
+                </div>
+
+                <div class="empty-state" id="noReviews" style="display: none;">
+                    <span class="empty-icon">⭐</span>
+                    <h3>No Reviews Yet</h3>
+                    <p>Reviews will appear here when customers leave feedback</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Edit User Modal -->
+    <div class="modal" id="editUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit User</h2>
+                <button class="modal-close" onclick="closeModal('editUserModal')">×</button>
+            </div>
+            <form id="editUserForm">
+                <input type="hidden" id="editUserId">
+                <div class="form-group">
+                    <label for="editUserName">Name</label>
+                    <input type="text" id="editUserName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editUserEmail">Email</label>
+                    <input type="email" id="editUserEmail" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" onclick="closeModal('editUserModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Order Modal -->
+    <div class="modal" id="viewOrderModal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <button class="modal-close" onclick="closeModal('viewOrderModal')">×</button>
+            </div>
+            <div class="order-details" id="orderDetails">
+                <!-- Order details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toastMessage">Success!</span>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if manager is logged in
+            if (!isManagerLoggedIn()) {
+                window.location.href = 'manager-login.html';
+                return;
+            }
+
+            initDashboard();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Leave a Review - CaféBliss">
+    <title>Review - CaféBliss</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">☕</span>
+                <span class="logo-text">CaféBliss</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Menu</a>
+                <a href="cart.html" class="nav-link">
+                    <span class="cart-icon">🛒</span>
+                    Bag <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="user-menu" id="userMenu">
+                    <span class="user-greeting" id="userGreeting">Hi, User</span>
+                    <button class="btn btn-outline" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Review Section -->
+    <main class="review-page">
+        <div class="container">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="thank-you-icon">🎉</div>
+                    <h1>Thank You!</h1>
+                    <p>We'd love to hear about your experience</p>
+                </div>
+
+                <div class="order-info" id="orderInfo">
+                    <p>Order ID: <strong id="reviewOrderId"></strong></p>
+                </div>
+
+                <form class="review-form" id="reviewForm">
+                    <div class="rating-section">
+                        <label>How would you rate your experience?</label>
+                        <div class="star-rating" id="starRating">
+                            <input type="radio" name="rating" value="5" id="star5">
+                            <label for="star5" class="star" data-value="5">★</label>
+
+                            <input type="radio" name="rating" value="4" id="star4">
+                            <label for="star4" class="star" data-value="4">★</label>
+
+                            <input type="radio" name="rating" value="3" id="star3">
+                            <label for="star3" class="star" data-value="3">★</label>
+
+                            <input type="radio" name="rating" value="2" id="star2">
+                            <label for="star2" class="star" data-value="2">★</label>
+
+                            <input type="radio" name="rating" value="1" id="star1">
+                            <label for="star1" class="star" data-value="1">★</label>
+                        </div>
+                        <span class="rating-text" id="ratingText">Select a rating</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reviewText">Share your thoughts (optional)</label>
+                        <textarea id="reviewText" name="reviewText" rows="4"
+                            placeholder="Tell us what you loved about your order..."></textarea>
+                    </div>
+
+                    <div class="form-error" id="formError"></div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span class="btn-text">Submit Review</span>
+                        <span class="btn-loader"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-ghost" onclick="skipReview()">
+                        Skip for now
+                    </button>
+                </form>
+            </div>
+
+            <!-- Previous Reviews Section -->
+            <div class="previous-reviews">
+                <h2>What Others Are Saying</h2>
+                <div class="reviews-grid" id="reviewsGrid">
+                    <!-- Reviews will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal" id="thankYouModal">
+        <div class="modal-content thank-you-modal">
+            <div class="success-animation">
+                <div class="heart-animation">❤️</div>
+            </div>
+            <h2>Thank You for Your Review!</h2>
+            <p>Your feedback helps us serve you better</p>
+            <a href="index.html" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toastMessage">Success!</span>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+
+            // Check if logged in
+            if (!isLoggedIn()) {
+                showToast('Please login to continue', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+                return;
+            }
+
+            // Get last order for review
+            const lastOrder = getLastOrder();
+            if (!lastOrder) {
+                showToast('No order found to review', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+                return;
+            }
+
+            document.getElementById('reviewOrderId').textContent = lastOrder.orderId;
+            loadReviews();
+            initReviewForm();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CaféBliss - Premium cafe ordering experience with delicious coffee and snacks">
+    <title>CaféBliss - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">☕</span>
+                <span class="logo-text">CaféBliss</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Menu</a>
+                <a href="cart.html" class="nav-link">
+                    <span class="cart-icon">🛒</span>
+                    Bag <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="auth-buttons" id="authButtons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Register</a>
+                </div>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <span class="user-greeting" id="userGreeting">Hi, User</span>
+                    <button class="btn btn-outline" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Experience the <span class="highlight">Perfect Brew</span></h1>
+            <p class="hero-subtitle">Handcrafted beverages and delicious treats, made with love</p>
+            <a href="#menu" class="btn btn-primary btn-large">Explore Menu</a>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Scroll Down</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </header>
+
+    <!-- Menu Section -->
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Specialties</span>
+                <h2 class="section-title">Delicious Menu</h2>
+                <p class="section-subtitle">Explore our handpicked selection of premium coffees and treats</p>
+            </div>
+
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="coffee">Coffee</button>
+                <button class="category-btn" data-category="cold">Cold Drinks</button>
+                <button class="category-btn" data-category="food">Food</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- Menu items will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Fresh Ingredients</h3>
+                    <p>Sourced from the finest local farms</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Quick Service</h3>
+                    <p>Your order ready in minutes</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">❤️</div>
+                    <h3>Made with Love</h3>
+                    <p>Every cup crafted with passion</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">☕</span>
+                    <span class="logo-text">CaféBliss</span>
+                    <p>Brewing happiness since 2024</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">About Us</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="manager-login.html">Manager Portal</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CaféBliss. All rights reserved. | Academic Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toastMessage">Item added to bag!</span>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+            loadMenu();
+        });
+    </script>
+</body>
+
+</html>
