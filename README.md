@@ -1,4 +1,4 @@
-# CaféBliss - Cafe Ordering System
+# shoot the kuruvi - Cafe Ordering System
 
 A modern, visually appealing cafe ordering website built with HTML, CSS, and JavaScript.
 
